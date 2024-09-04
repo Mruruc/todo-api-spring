@@ -1,0 +1,21 @@
+### Registration Test
+
+POST http://localhost:8080/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "firstName": "",
+  "lastName": "Doe",
+  "email": "jane_DOE@oe",
+  "password": "pass.a"
+}
+
+
+### Authentication Test
+POST http://localhost:8080/api/v1/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "john_DOE@doe.com",
+  "password": "password5.Fa"
+}

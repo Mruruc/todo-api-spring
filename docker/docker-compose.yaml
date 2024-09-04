@@ -1,0 +1,9 @@
+services:
+  todo-api:
+    container_name: todo-api
+    image: todo/todo-api:1.0.2
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+

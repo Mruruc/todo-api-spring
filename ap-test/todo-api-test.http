@@ -1,0 +1,19 @@
+
+# get all todos
+GET http://localhost:8080/api/v1/to-do
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjM4NTk3NjEsInN1YiI6ImpvaG5fRE9FQGRvZS5jb20iLCJleHAiOjE3MjM4NjMzNjF9.NzqtgNIw2lgWQhUsVFAeSd4_jYUhXrthgxkLR8TSzhA
+
+
+# get todo by id
+###
+GET http://localhost:8080/api/v1/to-do/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjM4NTkyMzksInN1YiI6ImpvaG5fRE9FMjFAZG9lLmNvbSIsImV4cCI6MTcyMzg2MjgzOX0.mh7amse5RddvO9zIYqU3TBsT2d7ntRrtLZY0jkzE2Ls
+
+###
+POST http://localhost:8080/api/v1/to-do
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjM4MjUyOTIsInN1YiI6ImpvaG5fRE9FQGRvZS5jb20iLCJleHAiOjE3MjM4Mjg4OTJ9.5O9OPEfv9MHZWzGIkro0evMcn8VoWURvDW7nw84F8go
+
+{
+  "description": "Shopping"
+}
