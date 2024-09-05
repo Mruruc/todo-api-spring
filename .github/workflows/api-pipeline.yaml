@@ -12,20 +12,18 @@ on:
 
 jobs:
   compile:
-    runs-on: ubuntu-latest
     name: Compile project
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Setup JDK
         uses: actions/setup-jdk@v4
         with:
           java-version: '21'
           distribution: 'corretto'
-
       - name: Compile project
         run: mvn clean package
 
@@ -50,12 +48,17 @@ jobs:
         run: |
           echo "VERSION=$(mvn -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
 
-      - name: Login to docker registery
+      - name: Login to docker registry
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & Push image to registery
-        run: docker build  -t ${{secrets.DOCKERHUB_USERNAME}}/todo-api:${{secrets.GITHUB_TOKEN}} -f docker/Dockerfile . && | 
-             docker push
+      - name: Build image
+        run: |
+          docker build  \ 
+          -t ${{secrets.DOCKERHUB_USERNAME}}/todo-api:${{steps.extract_version.outputs.VERSION}} \ 
+          -f docker/Dockerfile .
+
+      - name: Push image to registry
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-api:${{steps.extract_version.outputs.VERSION}}
 
 
 
