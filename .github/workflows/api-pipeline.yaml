@@ -53,8 +53,8 @@ jobs:
 
       - name: Build image
         run: |
-          docker build  \ 
-          -t ${{secrets.DOCKERHUB_USERNAME}}/todo-api:${{steps.extract_version.outputs.VERSION}} \ 
+          docker build \
+          -t ${{secrets.DOCKERHUB_USERNAME}}/todo-api:${{steps.extract_version.outputs.VERSION}} \
           -f docker/Dockerfile .
 
       - name: Push image to registry
