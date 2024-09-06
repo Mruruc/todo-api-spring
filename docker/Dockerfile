@@ -9,7 +9,7 @@ RUN mvn clean package -DskipTests
 
 #Runtime stage
 FROM amazoncorretto:21 AS prod
-ARG APP_VERSION=1.0.0
+ARG APP_VERSION
 ENV JAR_NAME=to-do-api-${APP_VERSION}.jar
 WORKDIR /app
 COPY --from=build /build/target/${JAR_NAME} /app

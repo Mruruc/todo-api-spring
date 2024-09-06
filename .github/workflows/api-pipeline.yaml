@@ -54,6 +54,7 @@ jobs:
       - name: Build image
         run: |
           docker build \
+          --build-arg APP_VERSION=${{steps.extract_version.outputs.VERSION}} \
           -t ${{secrets.DOCKERHUB_USERNAME}}/todo-api:${{steps.extract_version.outputs.VERSION}} \
           -f docker/Dockerfile .
 
