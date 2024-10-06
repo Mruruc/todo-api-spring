@@ -1,9 +1,9 @@
 services:
   todo-api:
     container_name: todo-api
-    image: mruruc/todo-api:1.0.0
+    image: mruruc/todo-api:1.0.1
     ports:
       - "8080:8080"
     env_file:
-      - ../.env
+      - .env
 

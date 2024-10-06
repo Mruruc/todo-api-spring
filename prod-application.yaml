@@ -1,0 +1,19 @@
+application:
+  name: to-do-api
+  server:
+    port: 8080
+
+spring:
+  datasource:
+    url:
+    username:
+    password:
+
+security:
+  cors:
+    allowed:
+      origins: http://localhost:5173
+  authentication:
+    jwt:
+      signing-key: kKJ1broVO1hn2yoRK19jCOfSO0iEyxcH38x3s5VJyEs=
+      TOKEN_EXPIRATION_TIME: 3600000

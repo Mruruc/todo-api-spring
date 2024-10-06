@@ -1,18 +1,16 @@
 spring:
   application:
-    name: ${APPLICATION_NAME:to-do-api}
+    name: ${application.name}
 
-  # datasource configurations
   datasource:
-    url: ${SPRING.DATASOURCE.URL}
-    username: ${SPRING.DATASOURCE.USERNAME}
-    password: ${SPRING.DATASOURCE.PASSWORD}
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
     driver-class-name: org.postgresql.Driver
-  # jpa properties
+
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    #show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -22,11 +20,11 @@ spring:
 server:
   servlet:
     context-path: /api/v1
-  port: ${APPLICATION.SERVER.PORT:8080}
+  port: ${application.server.port}
 
 application:
   security:
-    allowed-origins : ${SECURITY.CORS.ALLOWED.ORIGINS}
+    allowed-origins: ${security.cors.allowed.origins}
     jwt:
-      signing-key: ${SECURITY.AUTHENTICATION.JWT.SIGNING_KEY}
-      TOKEN_EXPIRATION_DATE: ${SECURITY.AUTHENTICATION.JWT.TOKEN_EXPIRATION_TIME:3600000}
+      signing-key: ${application.security.jwt.signing-key}
+      TOKEN_EXPIRATION_TIME: ${security.authentication.jwt.TOKEN_EXPIRATION_TIME}
