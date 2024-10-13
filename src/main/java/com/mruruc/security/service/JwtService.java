@@ -19,7 +19,7 @@ import java.util.Map;
 public class JwtService {
     @Value("${application.security.jwt.signing-key}")
     private String signingKey;
-    @Value("${application.security.jwt.TOKEN_EXPIRATION_DATE}")
+    @Value("${application.security.jwt.TOKEN_EXPIRATION_TIME}")
     private long tokenExpirationDate;
 
     private final UserDetailsService userDetailsService;

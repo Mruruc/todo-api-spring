@@ -24,7 +24,7 @@ server:
 
 application:
   security:
-    allowed-origins: ${security.cors.allowed.origins}
+    allowed-origins: ${application.security.allowed-origins}
     jwt:
       signing-key: ${application.security.jwt.signing-key}
-      TOKEN_EXPIRATION_TIME: ${security.authentication.jwt.TOKEN_EXPIRATION_TIME}
+      TOKEN_EXPIRATION_TIME: ${application.security.jwt.TOKEN_EXPIRATION_TIME}
