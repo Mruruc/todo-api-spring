@@ -1,0 +1,35 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:postgresql://
+    username:
+    password:
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        hbm2ddl:
+          auto: update
+    open-in-view: false
+
+application:
+  name: todo-api-spring
+  server:
+    port: 8082
+  security:
+    allowed-origins: http://localhost:5173
+    jwt:
+      signing-key: kKJ1broVO1hn2yoRK19jCOfSO0iEyxcH38x3s5VJyEs=
+      access-token-expiration: 900000 # 15 minutes in milliseconds
+    opaque:
+      refresh-token-expiration: 604800000 # 7 days in milliseconds
+
+

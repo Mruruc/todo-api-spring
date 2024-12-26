@@ -57,6 +57,7 @@ public class AuthorizationConfig {
                 .authorizeHttpRequests(requests ->
                         requests
                                 .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/test/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .headers(withDefaults())

@@ -30,8 +30,7 @@ public class CustomAccessDeniedHandlerImpl implements AccessDeniedHandler {
         response.getWriter()
                 .write(objectMapper.writeValueAsString(
                         ExceptionResponse.builder()
-                                .httpStatus(HttpStatus.FORBIDDEN)
-                                .description("Access denied! You don't have permission to access this resource.")
+                                .message("Access denied! You don't have permission to access this resource.")
                                 .build()));
 
     }

@@ -5,7 +5,6 @@ import jakarta.validation.ConstraintViolation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class DtoNotValidException extends RuntimeException {
     private final Set<? extends ConstraintViolation<?>> violations;
@@ -14,7 +13,7 @@ public class DtoNotValidException extends RuntimeException {
         this.violations = violations;
     }
 
-    public Map<String, String> getViolationsMap() {
+    public Map<String, String> getViolations() {
         HashMap<String, String> violationsMap = new HashMap<>();
 
         for (ConstraintViolation<?> constraintViolation : violations) {

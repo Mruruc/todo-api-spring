@@ -3,7 +3,6 @@ package com.mruruc.handeler.authentication_exception_handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mruruc.handeler.exception_dto.ExceptionResponse;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -26,14 +25,13 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(final HttpServletRequest request,
                          final HttpServletResponse response,
-                         final AuthenticationException authException) throws IOException, ServletException {
+                         final AuthenticationException authException) throws IOException {
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(
                 objectMapper.writeValueAsString(
                         ExceptionResponse.builder()
-                                .httpStatus(HttpStatus.UNAUTHORIZED)
                                 .message("Authentication Required !")
                                 .build()
                 )

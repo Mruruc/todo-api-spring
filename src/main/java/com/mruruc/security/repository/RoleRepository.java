@@ -1,6 +1,6 @@
-package com.mruruc.repository;
+package com.mruruc.security.repository;
 
-import com.mruruc.model.Role;
+import com.mruruc.security.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
