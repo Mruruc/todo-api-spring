@@ -14,4 +14,5 @@ public class BeanConfig {
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
+
 }

@@ -2,16 +2,13 @@ package com.mruruc.dto;
 
 import com.mruruc.validation.custome_validations.Password;
 import com.mruruc.validation.custome_validations.ValidEmail;
-import lombok.*;
+import lombok.Builder;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Builder
-public class AuthenticationRequest {
-    @ValidEmail
-    private String email;
-    @Password
-    private String password;
-}
+public record AuthenticationRequest(
+        @ValidEmail
+        String email,
+        @Password
+        String password)
+{}

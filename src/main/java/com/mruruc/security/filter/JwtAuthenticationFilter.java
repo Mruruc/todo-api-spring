@@ -8,6 +8,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,17 +24,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
-
-
-    public JwtAuthenticationFilter(JwtService jwtService, ObjectMapper objectMapper) {
-        this.jwtService = jwtService;
-
-        this.objectMapper = objectMapper;
-    }
-
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
@@ -56,6 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+    
 
     private <T extends RuntimeException> void exceptionHandler(HttpServletResponse response, T exception) throws IOException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -64,8 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.getWriter().write(
                 objectMapper.writeValueAsString(
                         ExceptionResponse.builder()
-                                .httpStatus(HttpStatus.UNAUTHORIZED)
-                                .description(exception.getMessage())
+                                .message(exception.getMessage())
                                 .build()
                 )
         );
@@ -99,7 +93,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isAuthenticationEndpoint(HttpServletRequest request) {
-        return request.getServletPath().contains("/auth/");
+        String servletPath = request.getServletPath();
+        return servletPath.contains("/auth/") || servletPath.contains("/test");
     }
 
 }

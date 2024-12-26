@@ -1,7 +1,9 @@
 package com.mruruc.handeler.exception_handler;
 
 import com.mruruc.exceptions.DtoNotValidException;
+import com.mruruc.exceptions.InvalidTokenException;
 import com.mruruc.handeler.exception_dto.ExceptionResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,14 +15,34 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ExceptionResponse> handleDataIntegrityException(DataIntegrityViolationException exception){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .message("Invalid username or email address!")
+                                .build()
+                );
+    }
     @ExceptionHandler(DtoNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationException(DtoNotValidException exception) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(
                         ExceptionResponse.builder()
-                                .httpStatus(HttpStatus.BAD_REQUEST)
-                                .errors(exception.getViolationsMap())
+                                .errors(exception.getViolations())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ExceptionResponse> handleRefreshTokenInvalidException(InvalidTokenException invalidTokenException) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ExceptionResponse.builder()
+                                .message(invalidTokenException.getMessage())
                                 .build()
                 );
     }
@@ -31,7 +53,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(
                         ExceptionResponse.builder()
-                                .description(badCredentialsException.getMessage())
+                                .message(badCredentialsException.getMessage())
                                 .build());
     }
 
@@ -41,8 +63,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(
                         ExceptionResponse.builder()
-                                .httpStatus(HttpStatus.UNAUTHORIZED)
-                                .description("Access denied !")
+                                .message("Access denied !")
                                 .build()
                 );
     }
@@ -55,8 +76,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(
                         ExceptionResponse.builder()
-                                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .description("An unexpected error occurred. Please Login Again !")
+                                .message("An unexpected error occurred. Please Login Again !")
                                 .build()
                 );
     }

@@ -1,5 +1,6 @@
-package com.mruruc.model;
+package com.mruruc.security.model;
 
+import com.mruruc.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,14 +27,18 @@ public class Role {
     @SequenceGenerator(name = "role_pk_sequence_generator", allocationSize = 1)
     @Column(name = "role_id")
     private Long roleId;
-    @Column(unique = true,name = "role_name")
+
+    @Column(unique = true, name = "role_name")
     private String roleName;
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
+
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users;
+    
 }
