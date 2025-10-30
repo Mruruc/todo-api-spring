@@ -14,7 +14,5 @@ public record RegistrationRequest(
         @ValidEmail
         String email,
         @Password
-        String password,
-        @Password
-        String passwordRetype)
+        String password)
 {}

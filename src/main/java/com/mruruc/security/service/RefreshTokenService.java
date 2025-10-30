@@ -1,8 +1,10 @@
 package com.mruruc.security.service;
 
 import com.mruruc.exceptions.InvalidTokenException;
+import com.mruruc.model.User;
 import com.mruruc.security.model.RefreshToken;
 import com.mruruc.security.repository.RefreshTokenRepository;
+import com.mruruc.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ public class RefreshTokenService {
     @Value("${application.security.opaque.refresh-token-expiration}")
     private long refreshTokenExpiration;
     private final RefreshTokenRepository repository;
+    private final UserService userService;
 
     public RefreshToken findToken(String token) {
         return repository
@@ -23,12 +26,13 @@ public class RefreshTokenService {
     }
 
     public RefreshToken saveToken(String token, String username) {
+        User user = userService.getUserRefByUserName(username);
         return repository.save(
                 RefreshToken.builder()
                         .token(token)
                         .expiryDate(Instant.ofEpochMilli(System.currentTimeMillis() + refreshTokenExpiration))
                         .isRevoked(false)
-                        .username(username)
+                        .user(user)
                         .build()
         );
     }
@@ -43,7 +47,7 @@ public class RefreshTokenService {
     }
 
     public RefreshToken findTokenByEmail(String username) {
-        return repository.findByUsername(username)
+        return repository.findByUser_Email(username)
                 .orElseThrow(() -> new InvalidTokenException("Invalid refresh token"));
     }
 

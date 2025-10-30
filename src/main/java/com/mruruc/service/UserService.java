@@ -32,6 +32,10 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found!"));
     }
 
+    public User getUserRefByUserName(String username) {
+        return repository.getReferenceByEmail(username);
+    }
+
     public void saveUser(RegistrationRequest request) {
         dtoValidator.validate(request);
         User user = buildUserEntity(request);

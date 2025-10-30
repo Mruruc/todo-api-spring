@@ -5,7 +5,6 @@ import com.mruruc.dto.AuthenticationResponse;
 import com.mruruc.exceptions.InvalidTokenException;
 import com.mruruc.security.model.RefreshToken;
 import com.mruruc.validation.dtoValidator.DtoValidator;
-import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Base64;
 
 @Service
@@ -59,7 +57,7 @@ public class AuthService {
             refreshTokenService.deleteToken(token);
             throw new InvalidTokenException("Invalid refresh token");
         }
-        return refreshToken.getUsername();
+        return refreshToken.getUser().getEmail();
     }
 
     public boolean isRefreshTokenExpired(RefreshToken token) {

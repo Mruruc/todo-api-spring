@@ -1,5 +1,6 @@
 package com.mruruc.security.model;
 
+import com.mruruc.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +16,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "refresh_tokens",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "uniq_token_constraint", columnNames = {"token"}),
-                @UniqueConstraint(name = "uniq_username_constraint", columnNames = {"username"})
-        })
+@Table(name = "refresh_tokens")
 @EntityListeners(AuditingEntityListener.class)
 public class RefreshToken {
     @Id
@@ -44,8 +41,11 @@ public class RefreshToken {
     private String ipAddress;
     private String userAgent;
 
-    @Column(nullable = false,unique = true)
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_refresh_token_user")
+    )
+    private User user;
 
 
 }
